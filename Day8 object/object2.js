@@ -50,3 +50,12 @@ console.log(Object.entries(tinderUser2))
 console.log(tinderUser2.hasOwnProperty('age')) //return true or false 
 
 
+//3
+const course = { 
+    coursename:"js in hindi ",
+    price:"499"
+}
+
+const {coursename : name} = course;  //desstructuring
+console.log(name)
+
