@@ -1,0 +1,175 @@
+# JavaScript Execution Context — Simple Notes
+
+## 1. What is an Execution Context?
+
+An execution context is the environment in which JavaScript manages and executes code.
+
+It keeps track of things such as:
+- Variables and their values
+- Functions
+- The current code being executed
+
+Think of it as a workspace JavaScript prepares to run your code.
+
+## 2. Types of Execution Context
+
+1. **Global Execution Context (GEC):** Created when a JavaScript script starts. It handles the global environment and top-level code.
+2. **Function Execution Context (FEC):** Created whenever a function is called. Each function call has its own local environment.
+3. **Eval Execution Context:** Associated with code executed using `eval()`. This is uncommon, and `eval()` is generally best avoided.
+
+For most everyday JavaScript, focus on the Global and Function Execution Contexts.
+
+## 3. Two Main Phases
+
+### Phase 1: Memory Creation / Environment Setup
+
+Before executing statements, JavaScript sets up bindings for variables and functions.
+
+- Function declarations are generally available before their declaration line is reached.
+- `let` and `const` bindings exist but remain uninitialized until their declaration executes. Accessing them too early causes a `ReferenceError`. This period is called the **Temporal Dead Zone (TDZ)**.
+- `var` declarations are initialized to `undefined` during setup.
+
+### Phase 2: Execution
+
+JavaScript executes statements, evaluates expressions, assigns values, and calls functions.
+
+Example:
+
+```javascript
+let name = "Akash";
+let age = 21;
+
+function greet() {
+    let message = "Hello";
+    console.log(message);
+}
+
+greet();
+console.log(name);
+```
+
+Output:
+
+```text
+Hello
+Akash
+```
+
+The function body runs when `greet()` is called, not simply when the function is declared.
+
+## 4. What Happens When a Function Is Called?
+
+Example:
+
+```javascript
+let x = 10;
+
+function add(a, b) {
+    let result = a + b;
+    return result;
+}
+
+let answer = add(5, 3);
+console.log(answer);
+```
+
+When `add(5, 3)` is called, JavaScript creates a Function Execution Context.
+
+Inside that context:
+- `a` gets the value `5`.
+- `b` gets the value `3`.
+- `result` becomes `8`.
+- `return result` sends `8` back to the calling code.
+
+After the function returns, its execution context is removed from the call stack. The global code continues, and `answer` becomes `8`.
+
+Output:
+
+```text
+8
+```
+
+Local variables such as `a`, `b`, and `result` belong to the function's local environment.
+
+## 5. What Is the Call Stack?
+
+The **Call Stack** tracks which function is currently executing and where execution should resume.
+
+It follows **LIFO: Last In, First Out**. The last function added to the stack finishes first.
+
+Example:
+
+```javascript
+function first() {
+    second();
+    console.log("First");
+}
+
+function second() {
+    console.log("Second");
+}
+
+first();
+```
+
+Simplified order:
+1. The global code calls `first()`.
+2. `first()` calls `second()`.
+3. `second()` runs and finishes.
+4. Execution returns to `first()`.
+5. `first()` prints its message and finishes.
+
+Output:
+
+```text
+Second
+First
+```
+
+## 6. Local and Global Variables
+
+Example:
+
+```javascript
+let name = "Akash";
+
+function greet() {
+    let name = "Rahul";
+    console.log(name);
+}
+
+greet();
+console.log(name);
+```
+
+Output:
+
+```text
+Rahul
+Akash
+```
+
+The `name` inside the function is a local variable. It does not change the global `name`.
+
+## 7. Overall Execution Flow
+
+1. JavaScript starts running the script.
+2. It creates the Global Execution Context.
+3. It sets up variable and function bindings.
+4. It executes top-level statements.
+5. When a function is called, a Function Execution Context is created and placed on the Call Stack.
+6. The function executes.
+7. When the function returns, its context is removed from the Call Stack and execution resumes in the caller.
+8. The script finishes when there is no more work to execute.
+
+## Quick Revision
+
+- **Execution Context:** The environment in which JavaScript manages and executes code.
+- **GEC:** The global environment created when a script starts.
+- **FEC:** A new execution context created for each function call.
+- **Memory Creation Phase:** A simplified name for the setup stage, when bindings are prepared.
+- **Execution Phase:** Statements execute and values are assigned.
+- **Call Stack:** Tracks active function calls; it follows LIFO.
+- **TDZ:** The period when a `let` or `const` binding exists but cannot yet be accessed.
+
+Note: This is a beginner-friendly model. JavaScript engines have more detailed internal implementations, but this model is useful for understanding execution, scope, hoisting, and function calls.
