@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>html Events</title>
+  </head>
+  <body style="background-color: #414141; color: aliceblue">
+    <h2>Amazing image</h2>
+    <div>
+      <ul id="images">
+        <li>
+          <img
+            width="200px"
+            id="bg1"
+            src="https://imgs.search.brave.com/nlJ1ul5p4kCv8e6PlLcqzZfbJ2Kx7AQ5QcnshO1QPUA/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9zdGF0/aWMudmVjdGVlenku/Y29tL3N5c3RlbS9y/ZXNvdXJjZXMvdGh1/bWJuYWlscy8wNDIv/NzUwLzYxMS9zbWFs/bC9iZWF1dGlmdWwt/Ymx1cnJ5LXZpZXct/b2Ytc3VubGlnaHQt/d2l0aC10cmVlcy1h/bmQtbGVhdmVzLWFu/ZC1tb3JuaW5nLWRl/dy1mb3Itd2FsbHBh/cGVyLWJhY2tncm91/bmQtZnJlZS1waG90/by5qcGc"
+            alt="photoshop"
+          />
+        </li>
+        <li>
+          <img
+            width="200px"
+            id="bg2"
+            src="https://imgs.search.brave.com/oMzlnsYJhVpzoYGWnxL2zU1ze4AeiD6QUDZB-sjMvhc/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9jZG4u/bWFnaWNkZWNvci5p/bi9jb20vMjAyNC8w/Mi8xNTE1MDgwOS9L/YWRhbGktU29vdGhp/bmctQmFuYW5hLUxl/YXZlcy1XYWxscGFw/ZXItTXVyYWwtNzEw/eDQ4OC5qcGc"
+            alt=""
+          />
+        </li>
+        <li>
+          <img
+            width="200px"
+            id="bg3"
+            src="https://imgs.search.brave.com/1gUjd430YRVh8HO2FHSd6UVmTjYlvTlshJo0yB0SgIE/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWcu/bWFnbmlmaWMuY29t/L3ByZW1pdW0tcGhv/dG8vZmx5aW5nLWJp/cmRzLWZvcmVzdC1z/aWxob3VldHRlLXBh/c3RlbC1za3ktd2F0/ZXJjb2xvci1zdHls/ZS1uYXR1cmUtbGFu/ZHNjYXBlLXdhbGxw/YXBlcl83MjE0NDAt/MTA5MTAuanBnP3Nl/bXQ9YWlzX2h5YnJp/ZCZ3PTc0MCZxPTgw"
+            alt=""
+          />
+        </li>
+
+        <li>
+          <a style="color: aliceblue" href="https://google.com" id="google"
+            >Google</a
+          >
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    // document.getElementById('bg1').onclick = function(){
+    //     alert("bg-1 clicked ")
+    // }
+
+    //best approach
+
+    document.getElementById("bg1").addEventListener(
+      "click",
+      (e) => {
+        console.log(e);
+      },
+      false,
+    ); //->false - defalut
+
+    //event propagotion
+
+    //event bubbling and event capturing
+
+    document.getElementById("images").addEventListener("click", (e) => {
+      console.log("clicked inside the ul ");
+    });
+    document.getElementById("bg1").addEventListener("click", (e) => {
+      console.log("bg1 clicked ");
+      // prevents event propagation
+    }); //event bubbling -> inner to outer
+
+    // document.getElementById("images").addEventListener("click", (e)=>{
+
+    //     console.log("clicked inside the ul ")
+
+    // },true)  // event cappturing on
+    // document.getElementById("bg2").addEventListener("click", (e)=>{
+
+    //   console.log("bg2 clicked ")
+
+    // },true)  //event bubbling -> inner to outer
+
+    document.getElementById("google").addEventListener("click", function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      console.log("google clicked ");
+    });
+
+    //removes by clicking image
+    document.querySelector("#images").addEventListener(
+      "click",
+      (e) => {
+        
+        
+        if (e.target.tagName == "IMG") {
+            console.log(e.target.id);
+          console.log(e.target.parentNode);
+          let removeit = e.target.parentNode;
+          removeit.remove();
+        }
+      },
+      false,
+    );
+  </script>
+</html>
