@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body style="background-color: #111;" >
+    <h1 style="color: whitesmoke;" >Akash Rajshekhar</h1>
+    <button>stop</button>
+    
+</body>
+<script>
+
+    setTimeout(()=>{ 
+        console.log("settimeout run");
+    },2000)  //runs single time after 2 sec 
+ 
+
+  
+ const interval =  setInterval(()=>{
+    console.log("setinterval called ")
+},2000) //runs continously after 3 sec 
+
+
+const changeText = ()=>{ 
+    document.querySelector("h1").textContent = "Javascript "
+    console.log("change text called ")
+}
+
+document.querySelector("button").addEventListener( "click",  ()=>{
+ setTimeout(changeText , 1000)
+})
+
+document.querySelector("button").addEventListener( "click",  ()=>{
+ clearInterval(interval)
+ console.log("interval stopped")
+})
+
+
+
+
+</script>
+</html>
