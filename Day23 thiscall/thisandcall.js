@@ -30,21 +30,3 @@ user1.greet.call(user2);
 
 
 
-
-
-const person1 = {
-    firstName: "Akash",
-    lastName: "Rajshekhar"
-};
-
-const person2 = {
-    firstName: "Rahul",
-    lastName: "Sharma"
-};
-
-function fullName() {
-    console.log(this.firstName + " " + this.lastName);
-}
-
-fullName.call(person1);
-fullName.call(person2);
